@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B0F16">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Muestra tipográfica en vivo: tu TTF generado se registra con FontFace y se prueba en cascada, párrafo y mapa de caracteres. Exporta PNG o SVG con trazados.">
+<title>Punzón · Muestra</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<script>
+if(location.protocol==='file:'){document.write('<div class="file-guard"><h1 style="font-size:1.4rem;margin-bottom:10px">Sirve Punzón por HTTP</h1><p class="lead">Los módulos ES y el Service Worker necesitan un servidor local. Elige uno:</p><p style="margin-top:14px;font-weight:700;color:#F2A03D">Acode</p><pre>Pulsa el botón ▶ (Run) sobre index.html</pre><p style="margin-top:14px;font-weight:700;color:#F2A03D">Termux</p><pre>cd /sdcard/punzon\npython -m http.server 8080\n# abre http://localhost:8080</pre></div>');}
+</script>
+
+<noscript>
+  <div class="file-guard">
+    <h1 style="font-size:1.3rem;margin-bottom:10px">Punzón necesita JavaScript</h1>
+    <p class="lead">La muestra construye un archivo TTF en memoria y lo registra como fuente del navegador. Sin JavaScript no hay nada que probar.</p>
+  </div>
+</noscript>
+
+<header class="nav">
+  <a class="brand" href="index.html">
+    <svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#151B27"/><path d="M150 392V120h108c62 0 104 40 104 96s-42 96-104 96h-44v80z" fill="#F2A03D"/><circle cx="258" cy="216" r="42" fill="#151B27"/><path d="M118 404h276" stroke="#2BD9E8" stroke-width="14" stroke-linecap="round"/></svg>
+    <span id="brandName">Punzón</span>
+  </a>
+  <nav class="nav-links" id="navLinks" aria-label="Secciones"></nav>
+  <div class="nav-right">
+    <span class="pill" id="projPill">—</span>
+    <button class="btn sm ghost" id="soundBtn" aria-pressed="false"><span class="dot"></span>Silencio</button>
+    <button class="btn sm ghost" id="installBtn" hidden>Instalar</button>
+    <a class="btn sm primary" href="index.html">Editor</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero" data-reveal>
+      <p class="eyebrow">Muestra tipográfica en vivo</p>
+      <h1>Tu fuente, <em>ya instalada</em> en esta página</h1>
+      <p class="lead">El TTF se genera en memoria y se registra con la API FontFace del navegador. Lo que ves abajo es exactamente el archivo que vas a descargar: mismo contorno, mismo espaciado, mismo kerning.</p>
+    </section>
+
+    <div class="lab">
+      <div class="col">
+        <div class="card pad" data-reveal>
+          <div class="row between" style="margin-bottom:10px">
+            <select id="projSel" aria-label="Proyecto que se está probando" style="max-width:280px"></select>
+            <span class="tiny muted" id="fontState">—</span>
+          </div>
+          <div class="specimen" id="specimen">
+            <div class="spec-line" id="bigLine" contenteditable="true" spellcheck="false" role="textbox" aria-label="Texto de la muestra">Punzón</div>
+            <div class="waterfall" id="waterfall"></div>
+          </div>
+          <div class="row" style="margin-top:12px">
+            <button class="btn sm" id="pangramBtn">Pangrama</button>
+            <button class="btn sm" id="abcBtn">Abecedario</button>
+            <button class="btn sm" id="numsBtn">Números</button>
+            <button class="btn sm steel" id="pngBtn">PNG de la muestra</button>
+            <button class="btn sm" id="svgBtn">SVG con trazados</button>
+          </div>
+          <p class="tiny muted" style="margin-top:10px">El título es editable: escribe directamente sobre él. La cascada de abajo repite ese mismo texto a siete tamaños.</p>
+        </div>
+
+        <div class="card pad" data-reveal>
+          <h3 class="ctrl-title">Párrafo</h3>
+          <div id="para"></div>
+        </div>
+
+        <div class="card pad" data-reveal>
+          <h3 class="ctrl-title">Mapa de caracteres</h3>
+          <div class="glyph-grid" id="map"></div>
+        </div>
+      </div>
+
+      <aside class="card rail inspector" id="controls" data-reveal aria-label="Ajustes de composición"></aside>
+    </div>
+
+    <div class="section-head" data-reveal>
+      <div>
+        <h2>Qué estás viendo exactamente</h2>
+        <p>Ninguna imagen estática: todo se dibuja desde los contornos que escribiste en el editor.</p>
+      </div>
+    </div>
+    <div class="credits" data-reveal>
+      <div class="credit"><b>FontFace real</b><p>El binario TTF se registra como una fuente del documento. El navegador la aplica con su propio motor de texto, igual que lo hará tu sistema al instalarla.</p></div>
+      <div class="credit"><b>Kerning activo</b><p>Si el proyecto tiene pares ajustados, se escriben en la tabla <code>kern</code> y aquí se ven aplicados sobre el texto real.</p></div>
+      <div class="credit"><b>PNG fiel</b><p>El PNG se rasteriza con canvas a partir de un SVG compuesto con tus contornos, a doble resolución. Es el navegador quien renderiza, no un servidor.</p></div>
+      <div class="credit"><b>SVG con trazados</b><p>La descarga vectorial no lleva texto dependiente de fuentes: cada letra va convertida a su path, así se ve igual en cualquier equipo.</p></div>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="js/pages/muestra.js"></script>
+</body>
+</html>
