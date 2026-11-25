@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B0F16">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Laboratorio de vectorización: convierte una foto o un PNG en contornos de fuente reales. Umbral, despeckle, simplificación y redondeo, todo en el navegador.">
+<title>Punzón · Trazo</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<script>
+if(location.protocol==='file:'){document.write('<div class="file-guard"><h1 style="font-size:1.4rem;margin-bottom:10px">Sirve Punzón por HTTP</h1><p class="lead">Los módulos ES y el Service Worker necesitan un servidor local. Elige uno:</p><p style="margin-top:14px;font-weight:700;color:#F2A03D">Acode</p><pre>Pulsa el botón ▶ (Run) sobre index.html</pre><p style="margin-top:14px;font-weight:700;color:#F2A03D">Termux</p><pre>cd /sdcard/punzon\npython -m http.server 8080\n# abre http://localhost:8080</pre></div>');}
+</script>
+
+<noscript>
+  <div class="file-guard">
+    <h1 style="font-size:1.3rem;margin-bottom:10px">Punzón necesita JavaScript</h1>
+    <p class="lead">El trazador recorre los píxeles de tu imagen y los convierte en contornos vectoriales dentro de esta pestaña. Ninguna imagen se sube a ningún servidor.</p>
+  </div>
+</noscript>
+
+<header class="nav">
+  <a class="brand" href="index.html">
+    <svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#151B27"/><path d="M150 392V120h108c62 0 104 40 104 96s-42 96-104 96h-44v80z" fill="#F2A03D"/><circle cx="258" cy="216" r="42" fill="#151B27"/><path d="M118 404h276" stroke="#2BD9E8" stroke-width="14" stroke-linecap="round"/></svg>
+    <span id="brandName">Punzón</span>
+  </a>
+  <nav class="nav-links" id="navLinks" aria-label="Secciones"></nav>
+  <div class="nav-right">
+    <span class="pill" id="projPill">—</span>
+    <button class="btn sm ghost" id="soundBtn" aria-pressed="false"><span class="dot"></span>Silencio</button>
+    <button class="btn sm ghost" id="installBtn" hidden>Instalar</button>
+    <a class="btn sm primary" href="index.html">Editor</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero" data-reveal>
+      <p class="eyebrow">Laboratorio de vectorización</p>
+      <h1>De una foto en tu cuaderno a un <em>contorno real</em></h1>
+      <p class="lead">Umbral, seguimiento de bordes, simplificación y redondeo de esquinas: todo en JavaScript puro, sin subir nada a ningún servidor. La imagen se reescala a 720 px antes de trazar para cuidar la memoria del teléfono.</p>
+    </section>
+
+    <div class="lab">
+      <div class="col">
+        <div class="card pad" data-reveal>
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Cargar imagen para vectorizar">
+            <h3>Suelta una imagen o pulsa para elegirla</h3>
+            <p class="tiny muted">PNG · JPG · WebP — un trazo oscuro sobre fondo claro da el mejor resultado</p>
+            <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" class="sr">
+          </div>
+          <div class="presets" style="margin-top:12px">
+            <span class="tiny muted" style="align-self:center">Presets:</span>
+            <button class="btn sm" data-preset="tinta">Tinta</button>
+            <button class="btn sm" data-preset="lapiz">Lápiz</button>
+            <button class="btn sm" data-preset="grueso">Grueso</button>
+            <button class="btn sm" data-preset="fino">Fino</button>
+            <button class="btn sm ghost" id="demoBtn">Usar muestra</button>
+          </div>
+          <p class="tiny muted" style="margin-top:10px">Los presets sólo mueven los controles de la derecha: después puedes afinar cada valor a mano.</p>
+        </div>
+
+        <div class="lab-views" data-reveal>
+          <div class="view"><span class="view-label">original</span><canvas id="srcView"></canvas></div>
+          <div class="view"><span class="view-label">vector</span><div id="vecView"></div></div>
+        </div>
+
+        <div class="card pad" data-reveal>
+          <div class="row between">
+            <div class="metrics-mini" style="flex:1">
+              <div class="stat"><b id="cCount">0</b><span>contornos</span></div>
+              <div class="stat"><b id="pCount">0</b><span>puntos</span></div>
+            </div>
+            <div class="col" style="min-width:212px">
+              <button class="btn primary block" id="sendBtn" disabled>Enviar al glifo</button>
+              <button class="btn block" id="svgBtn" disabled>Descargar SVG</button>
+            </div>
+          </div>
+          <p class="tiny muted" id="targetInfo" style="margin-top:10px"></p>
+        </div>
+      </div>
+
+      <aside class="card rail inspector" id="controls" data-reveal aria-label="Ajustes del trazado"></aside>
+    </div>
+
+    <div class="section-head" data-reveal>
+      <div>
+        <h2>Qué hace cada paso</h2>
+        <p>El trazador no usa librerías: recorre la imagen píxel a píxel y construye los contornos con la misma geometría que después se escribe en el TTF.</p>
+      </div>
+    </div>
+    <div class="credits" data-reveal>
+      <div class="credit"><b>1 · Umbral</b><p>Cada píxel se convierte en blanco o negro según su luminancia y su canal alfa. «Invertir» sirve cuando el trazo es claro sobre fondo oscuro.</p></div>
+      <div class="credit"><b>2 · Bordes</b><p>Se recorren las aristas frontera manteniendo el relleno a la derecha del camino. Los exteriores salen horarios y los huecos antihorarios, que es justo lo que exige TrueType.</p></div>
+      <div class="credit"><b>3 · Simplificar</b><p>Ramer–Douglas–Peucker elimina los puntos que no aportan silueta. «Eliminar motas» descarta las islas de ruido por debajo del área que indiques.</p></div>
+      <div class="credit"><b>4 · Redondear</b><p>Cada esquina se sustituye por una cuadrática de Bézier. Con el valor a cero obtienes polígonos duros; al subirlo, la letra se vuelve caligráfica.</p></div>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="js/pages/trazo.js"></script>
+</body>
+</html>
