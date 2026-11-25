@@ -1,0 +1,27 @@
+{
+  "id": "punzon-studio",
+  "name": "Punzón — estudio de fuentes y vectores",
+  "short_name": "Punzón",
+  "description": "Dibuja, vectoriza y exporta fuentes TTF y WOFF reales desde el navegador. 100% offline, sin dependencias.",
+  "lang": "es",
+  "dir": "ltr",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#07090E",
+  "theme_color": "#0B0F16",
+  "prefer_related_applications": false,
+  "categories": ["productivity", "graphics", "developer"],
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Editor de glifos", "short_name": "Editor", "url": "index.html" },
+    { "name": "Vectorizar imagen", "short_name": "Trazo", "url": "trazo.html" },
+    { "name": "Biblioteca de fuentes", "short_name": "Biblioteca", "url": "biblioteca.html" },
+    { "name": "Muestra tipográfica", "short_name": "Muestra", "url": "muestra.html" }
+  ]
+}
