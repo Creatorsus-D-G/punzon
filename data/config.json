@@ -1,0 +1,120 @@
+{
+  "brand": { "name": "Punzón", "tagline": "De tu trazo al TTF, sin salir del navegador.", "version": "1.1.0" },
+  "nav": [
+    { "href": "index.html", "label": "Editor", "key": "editor" },
+    { "href": "trazo.html", "label": "Trazo", "key": "trazo" },
+    { "href": "biblioteca.html", "label": "Biblioteca", "key": "biblioteca" },
+    { "href": "muestra.html", "label": "Muestra", "key": "muestra" },
+    { "href": "guia.html", "label": "Guía", "key": "guia" }
+  ],
+  "metricsPresets": [
+    { "id": "display", "label": "Display 1000", "unitsPerEm": 1000, "ascender": 800, "descender": -200, "capHeight": 700, "xHeight": 500, "lineGap": 0 },
+    { "id": "texto", "label": "Texto 1000", "unitsPerEm": 1000, "ascender": 750, "descender": -250, "capHeight": 680, "xHeight": 480, "lineGap": 60 },
+    { "id": "truetype", "label": "TrueType 2048", "unitsPerEm": 2048, "ascender": 1638, "descender": -410, "capHeight": 1434, "xHeight": 1024, "lineGap": 0 }
+  ],
+  "charsets": [
+    { "id": "mayus", "label": "Mayúsculas", "chars": "ABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+    { "id": "minus", "label": "Minúsculas", "chars": "abcdefghijklmnopqrstuvwxyz" },
+    { "id": "nums", "label": "Números", "chars": "0123456789" },
+    { "id": "es", "label": "Español", "chars": "áéíóúüñÁÉÍÓÚÜÑ¡¿" },
+    { "id": "punct", "label": "Signos", "chars": ".,;:!?-–—()[]{}\"'/\\&@#%*+=<>_$€" },
+    { "id": "space", "label": "Espacio", "chars": " " }
+  ],
+  "tools": [
+    { "id": "pen", "label": "Pluma", "key": "P", "hint": "Clic para colocar nodos, arrastra para tirar los manejadores. Enter cierra y confirma; clic cerca del primer nodo cierra el contorno." },
+    { "id": "free", "label": "Trazo", "key": "F", "hint": "Dibuja a mano alzada. Al soltar se suaviza, se simplifica y se expande a un contorno relleno con uniones redondas." },
+    { "id": "node", "label": "Nodo", "key": "N", "hint": "Arrastra nodos y manejadores. Supr borra el nodo. Arrastra sobre el relleno para mover la forma completa." },
+    { "id": "rect", "label": "Rect", "key": "R", "hint": "Arrastra en el lienzo para crear un rectángulo alineado a la rejilla si el ajuste está activo." },
+    { "id": "ellipse", "label": "Elipse", "key": "E", "hint": "Arrastra para crear una elipse. Dos elipses concéntricas más «Hueco» forman una O." },
+    { "id": "erase", "label": "Borrar", "key": "X", "hint": "Clic sobre una forma para eliminarla. El aviso ofrece deshacer durante unos segundos." },
+    { "id": "pan", "label": "Mover", "key": "H", "hint": "Arrastra para desplazar el lienzo. Rueda del ratón o pinza con dos dedos para hacer zoom." }
+  ],
+  "quality": [
+    { "id": "alta", "label": "Alta", "tol": 0.5, "seg": 20 },
+    { "id": "media", "label": "Media", "tol": 1.4, "seg": 14 },
+    { "id": "rapida", "label": "Rápida", "tol": 3.2, "seg": 10 }
+  ],
+  "pangrams": [
+    "El veloz murciélago hindú comía feliz cardillo y kiwi.",
+    "La cigüeña tocaba el saxofón detrás del palenque de paja.",
+    "Diseñar una fuente es dibujar el silencio entre las letras.",
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789",
+    "PUNZÓN · GLIFARIA · FONTANA · TIPONAUTA"
+  ],
+  "nameCandidates": [
+    { "name": "Punzón", "root": "punzón", "why": "La barra de acero grabada que golpea el metal para crear el carácter. Corto, en español y con oficio detrás.", "tags": ["histórico", "artesanal", "corto"], "score": 94 },
+    { "name": "Glifaria", "root": "glifo", "why": "Glifo + -aria: el lugar donde se fabrican glifos. Suena a taller y a software al mismo tiempo.", "tags": ["técnico", "latino"], "score": 91 },
+    { "name": "Fontana", "root": "font", "why": "«Fuente» en italiano. Cálido, tipográfico y pronunciable en cualquier idioma.", "tags": ["clásico", "cálido"], "score": 88 },
+    { "name": "Tiponauta", "root": "tipo", "why": "Quien navega la tipografía. Comunidad, exploración y un punto de juego.", "tags": ["lúdico", "comunidad"], "score": 86 },
+    { "name": "Asta", "root": "asta", "why": "El palo principal de una letra. Cuatro letras, dominio corto y muy memorable.", "tags": ["minimal", "español", "corto"], "score": 85 },
+    { "name": "Trazo Libre", "root": "trazo", "why": "Declara el gesto y la licencia en dos palabras. Muy alineado con el espíritu FOSS.", "tags": ["libre", "gestual"], "score": 82 },
+    { "name": "Mil·em", "root": "em", "why": "La rejilla de mil unidades donde vive cada glifo. Nombre de nicho para gente de fuentes.", "tags": ["técnico", "minimal"], "score": 83 },
+    { "name": "Contrapunzón", "root": "contrapunzón", "why": "El vacío interior de la letra. Precioso y exacto, aunque largo para una app.", "tags": ["histórico", "largo"], "score": 80 },
+    { "name": "Curvara", "root": "curva", "why": "Curva + -ara. Geométrico, sonoro y disponible como marca inventada.", "tags": ["geométrico", "inventado"], "score": 79 },
+    { "name": "Nodaria", "root": "nodo", "why": "Los nodos Bézier como protagonistas. Técnico y coherente con el editor.", "tags": ["técnico", "latino"], "score": 78 },
+    { "name": "Fundición", "root": "fundición", "why": "Donde se funden los tipos. Histórico y con peso cultural en español.", "tags": ["histórico", "comunidad"], "score": 77 },
+    { "name": "Letraria", "root": "letra", "why": "Letras + -aria. Amable y cercano, bueno para público no técnico.", "tags": ["cálido", "latino"], "score": 76 },
+    { "name": "Vértice", "root": "vértice", "why": "El punto donde se unen dos trazos. Geométrico y elegante.", "tags": ["geométrico", "español"], "score": 75 },
+    { "name": "Ojal", "root": "ojal", "why": "El ojo de la letra. Cortísimo, sonoro y con doble lectura en español.", "tags": ["minimal", "español", "corto"], "score": 74 },
+    { "name": "Emcuadra", "root": "em", "why": "Cuadrar en la em. Describe exactamente lo que hace el editor.", "tags": ["técnico", "inventado"], "score": 72 },
+    { "name": "Bézier Libre", "root": "bézier", "why": "Homenaje directo al matemático de las curvas. Bézier no es marca nuestra: es un apellido histórico.", "tags": ["técnico", "libre"], "score": 70 }
+  ],
+  "nameParts": {
+    "prefix": ["Glifo", "Trazo", "Nodo", "Asta", "Punzón", "Curva", "Em", "Letra", "Vértice", "Fundición", "Ojal", "Tipo"],
+    "suffix": ["aria", "ería", "Lab", "Forge", "Studio", "Libre", "Kit", "Haus", "ica", "ón", "ería Libre", "nauta"]
+  },
+  "stack": [
+    { "name": "opentype.js", "license": "MIT", "role": "Parser y escritor OpenType de referencia", "use": "Estudiado como referencia. No se incluye: Punzón escribe el sfnt de forma nativa para funcionar sin dependencias ni CDN.", "url": "https://github.com/opentypejs/opentype.js" },
+    { "name": "ImageTracer.js", "license": "Unlicense", "role": "Vectorización raster a SVG en JS puro", "use": "Referencia del trazador. Punzón implementa su propio seguidor de bordes, RDP y redondeo de esquinas en vector.js.", "url": "https://github.com/jankovicsandras/imagetracerjs" },
+    { "name": "SVG.js", "license": "MIT", "role": "Manipulación ligera de SVG", "use": "Referencia de API. Se usa el DOM SVG nativo para no añadir peso ni una segunda fuente de estado.", "url": "https://svgjs.dev/" },
+    { "name": "Clipper2", "license": "Boost", "role": "Booleanas y offsetting de polígonos", "use": "Referencia. Las booleanas de Punzón usan winding non-zero: unir, invertir y restar sin librería.", "url": "https://www.angusj.com/clipper2/Docs/Overview.htm" },
+    { "name": "Paper.js", "license": "MIT", "role": "Booleanas exactas sobre curvas Bézier", "use": "Alternativa futura si se necesitan booleanas curvas exactas en lugar de winding.", "url": "https://paperjs.org/" },
+    { "name": "fonteditor-core", "license": "BSD-3", "role": "Leer y escribir ttf, woff, woff2, eot, svg", "use": "Camino futuro para WOFF2, que exige Brotli y transformación de glyf.", "url": "https://github.com/kekee000/fonteditor-core" },
+    { "name": "FontForge", "license": "GPL-3", "role": "Editor de fuentes de escritorio", "use": "Destino natural para pulir hinting y kerning avanzado sobre el TTF exportado.", "url": "https://fontforge.org/" },
+    { "name": "Fontra", "license": "Código abierto", "role": "Editor de fuentes en navegador sobre UFO y designspace", "use": "Interoperabilidad futura vía UFO/designspace.", "url": "https://github.com/fontra/fontra" },
+    { "name": "UFO 3", "license": "Especificación abierta", "role": "Formato fuente XML legible y estable", "use": "Modelo mental del JSON de proyecto de Punzón: métricas, glifos, capas y metadatos separados.", "url": "https://unifiedfontobject.org/versions/ufo3/" },
+    { "name": "fontTools", "license": "MIT", "role": "Manipulación y auditoría de fuentes en Python", "use": "Verificación externa de los TTF generados: ttx fuente.ttf dentro de Termux.", "url": "https://github.com/fonttools/fonttools" },
+    { "name": "svg-to-png", "license": "Código abierto", "role": "Rasterizado fiel usando el propio navegador", "use": "Lección aplicada: el navegador es el mejor renderizador SVG; la muestra se rasteriza con canvas y object URL.", "url": "https://github.com/vincerubinetti/svg-to-png" },
+    { "name": "CompressionStream", "license": "API nativa", "role": "Deflate zlib en el navegador", "use": "Compresión real de las tablas WOFF sin dependencias. Si falta, el WOFF se escribe sin comprimir.", "url": "https://developer.mozilla.org/docs/Web/API/CompressionStream" }
+  ],
+  "decisions": [
+    { "t": "Escritor TTF nativo, cero dependencias", "d": "El núcleo genera head, hhea, maxp, hmtx, cmap formato 4, loca, glyf, name, post, OS/2 y kern a mano, con checksums por tabla y checkSumAdjustment global. Así la exportación funciona offline, sin CDN y sin riesgo de que una librería externa cambie de comportamiento." },
+    { "t": "Cúbicas a cuadráticas con error controlado", "d": "TrueType sólo admite cuadráticas. Cada cúbica se subdivide recursivamente con de Casteljau hasta que la diferencia entre los dos candidatos a punto de control baja de la tolerancia de calidad. Los arcos SVG se convierten primero a cúbicas, de modo que cualquier transformación afín posterior es segura." },
+    { "t": "Winding: nest, union y hole", "d": "Los paths importados se orientan por anidamiento: exterior horario, huecos antihorario. Los trazos a mano alzada se expanden a rectángulos más uniones redondas, todos horarios, porque con non-zero winding eso produce la unión exacta sin booleanas. Al invertir un contorno se rota hasta el primer punto on-curve para que el M del SVG no caiga sobre un punto de control." },
+    { "t": "Un solo módulo de vector: vector.js", "d": "El trazador raster y la entrada/salida SVG se fusionaron en js/core/vector.js. Ambos convertían cosas a contornos y compartían path.js, así que separarlos sólo añadía un archivo y un import más que mantener." },
+    { "t": "JSON como única fuente de verdad", "d": "data/config.json genera herramientas, charsets, presets, calidad, nombres y documentación. El proyecto .punzon.json guarda métricas, glifos y kerning. Los controles se construyen desde especificaciones JSON con ctrl(), no se escriben a mano uno por uno." },
+    { "t": "IndexedDB con respaldo en memoria", "d": "localStorage se limita a unos 5 MB y es síncrono. IndexedDB guarda proyectos completos y autoguardado sin bloquear la interfaz. Si el navegador lo bloquea, el almacén cae a memoria para que la sesión siga siendo utilizable en lugar de romper el arranque." },
+    { "t": "Presupuesto de memoria en 4 GB", "d": "Las imágenes se reescalan a 720 px antes de trazar, el historial se limita a 80 pasos, los FontFace anteriores se eliminan antes de registrar el nuevo y los object URL se revocan tras descargar. Sin WebAssembly ni frameworks." },
+    { "t": "WOFF sí, WOFF2 todavía no", "d": "WOFF1 es un contenedor zlib sobre el sfnt y se resuelve con CompressionStream nativa. WOFF2 exige Brotli y una transformación previa de glyf y loca: se declara pendiente en lugar de fingirlo." },
+    { "t": "Service Worker tolerante durante la fusión", "d": "El precache usa peticiones individuales con allSettled en lugar de cache.addAll, para que un archivo legado ya borrado no aborte la instalación completa. Los recursos del mismo origen se sirven con stale-while-revalidate y las navegaciones caen a index.html sin conexión." }
+  ],
+  "shortcuts": [
+    ["P / F / N", "Pluma / Trazo / Nodo"],
+    ["R / E / X / H", "Rect / Elipse / Borrar / Mover"],
+    ["Enter", "Cerrar y confirmar la pluma"],
+    ["Esc", "Cancelar el trazo en curso"],
+    ["Ctrl+Z / Ctrl+Y", "Deshacer / Rehacer"],
+    ["Ctrl+S", "Guardar el proyecto"],
+    ["Ctrl+E", "Abrir exportación"],
+    ["Supr", "Borrar nodo o forma seleccionada"],
+    ["G", "Alternar cuadrícula"],
+    ["0", "Encajar la vista"],
+    ["+ / −", "Acercar / alejar"],
+    ["[ / ]", "Grosor del trazo"],
+    ["Flechas", "Mover nodo 1 unidad (Shift = 10)"],
+    ["Dos dedos", "Pan y zoom táctil"]
+  ],
+  "roadmap": [
+    { "state": "hecho", "t": "Editor vectorial con pluma, trazo libre, nodos y formas" },
+    { "state": "hecho", "t": "Trazador raster nativo con umbral, despeckle y suavizado" },
+    { "state": "hecho", "t": "Exportación TTF y WOFF reales, más lámina SVG, JSON y CSS" },
+    { "state": "hecho", "t": "Muestra en vivo con FontFace y rasterizado a PNG" },
+    { "state": "hecho", "t": "Biblioteca con búsqueda, filtros, vistas guardadas y deshacer" },
+    { "state": "hecho", "t": "PWA instalable con Service Worker tolerante y offline" },
+    { "state": "hecho", "t": "Fusión de módulos: vector.js y app.css" },
+    { "state": "siguiente", "t": "Kerning por pares con edición visual sobre el texto" },
+    { "state": "siguiente", "t": "Importar TTF u OTF existente para editar sus glifos" },
+    { "state": "siguiente", "t": "WOFF2 y exportación UFO / designspace" },
+    { "state": "siguiente", "t": "Ligaduras y tabla GSUB" }
+  ]
+}
