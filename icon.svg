@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="t d">
+  <title id="t">Punzón</title>
+  <desc id="d">Marca de estudio de fuentes: punzón tipográfico sobre línea base con nodos Bézier.</desc>
+  <defs>
+    <linearGradient id="molten" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF7A18"/>
+      <stop offset=".45" stop-color="#F2A03D"/>
+      <stop offset="1" stop-color="#FF3D8B"/>
+    </linearGradient>
+    <linearGradient id="steel" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#2BD9E8"/>
+      <stop offset="1" stop-color="#5B8CFF"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".42" r=".62">
+      <stop offset="0" stop-color="#1C2331"/>
+      <stop offset="1" stop-color="#0B0F16"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Fondo a sangre para icono maskable; el trazo vive dentro de la zona segura. -->
+  <rect width="512" height="512" fill="url(#glow)"/>
+  <rect x="26" y="26" width="460" height="460" rx="86" fill="none" stroke="#2C3648" stroke-width="4"/>
+
+  <!-- Punzón / letra P -->
+  <path d="M150 392V120h108c62 0 104 40 104 96s-42 96-104 96h-44v80z" fill="url(#molten)"/>
+  <circle cx="258" cy="216" r="42" fill="#0B0F16"/>
+
+  <!-- Línea base y nodos -->
+  <path d="M118 404h276" stroke="url(#steel)" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="118" cy="404" r="19" fill="#0B0F16" stroke="#2BD9E8" stroke-width="9"/>
+  <circle cx="394" cy="404" r="19" fill="#0B0F16" stroke="#FF3D8B" stroke-width="9"/>
+</svg>
