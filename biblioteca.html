@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B0F16">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Biblioteca local de fuentes: busca, filtra, ordena, etiqueta, duplica y exporta tus proyectos como JSON. Todo vive en tu dispositivo.">
+<title>Punzón · Biblioteca</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<script>
+if(location.protocol==='file:'){document.write('<div class="file-guard"><h1 style="font-size:1.4rem;margin-bottom:10px">Sirve Punzón por HTTP</h1><p class="lead">Los módulos ES y el Service Worker necesitan un servidor local. Elige uno:</p><p style="margin-top:14px;font-weight:700;color:#F2A03D">Acode</p><pre>Pulsa el botón ▶ (Run) sobre index.html</pre><p style="margin-top:14px;font-weight:700;color:#F2A03D">Termux</p><pre>cd /sdcard/punzon\npython -m http.server 8080\n# abre http://localhost:8080</pre></div>');}
+</script>
+
+<noscript>
+  <div class="file-guard">
+    <h1 style="font-size:1.3rem;margin-bottom:10px">Punzón necesita JavaScript</h1>
+    <p class="lead">Tus proyectos se guardan en IndexedDB, dentro de este navegador. Sin JavaScript no hay biblioteca que abrir.</p>
+  </div>
+</noscript>
+
+<header class="nav">
+  <a class="brand" href="index.html">
+    <svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#151B27"/><path d="M150 392V120h108c62 0 104 40 104 96s-42 96-104 96h-44v80z" fill="#F2A03D"/><circle cx="258" cy="216" r="42" fill="#151B27"/><path d="M118 404h276" stroke="#2BD9E8" stroke-width="14" stroke-linecap="round"/></svg>
+    <span id="brandName">Punzón</span>
+  </a>
+  <nav class="nav-links" id="navLinks" aria-label="Secciones"></nav>
+  <div class="nav-right">
+    <span class="pill" id="projPill">—</span>
+    <button class="btn sm ghost" id="soundBtn" aria-pressed="false"><span class="dot"></span>Silencio</button>
+    <button class="btn sm ghost" id="installBtn" hidden>Instalar</button>
+    <button class="btn sm primary" id="newBtn">Nueva fuente</button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero" data-reveal>
+      <p class="eyebrow">Biblioteca local · IndexedDB</p>
+      <h1>Tus fuentes viven <em>en tu dispositivo</em></h1>
+      <p class="lead">Cada tarjeta muestra la fuente real: se genera un TTF en memoria y se registra con FontFace para que veas tus propios glifos, no una maqueta. Exporta el JSON para versionarlo en Git o llévatelo a otro equipo.</p>
+    </section>
+
+    <div class="lib-toolbar" data-reveal>
+      <input type="search" id="q" placeholder="Buscar por nombre, diseñador o etiqueta…" aria-label="Buscar proyectos">
+      <select id="filter" aria-label="Filtrar proyectos">
+        <option value="">Todas</option>
+        <option value="drawn">Con glifos</option>
+        <option value="empty">Vacías</option>
+        <option value="kern">Con kerning</option>
+      </select>
+      <select id="sort" aria-label="Ordenar proyectos">
+        <option value="modified">Recientes</option>
+        <option value="name">Nombre A–Z</option>
+        <option value="glyphs">Más glifos</option>
+        <option value="manual">Orden manual</option>
+      </select>
+      <select id="view" aria-label="Vistas guardadas"><option value="">Vista…</option></select>
+      <button class="btn sm" id="saveView">Guardar vista</button>
+      <button class="btn sm ghost" id="importBtn">Importar JSON</button>
+      <input type="file" id="fileInput" accept=".json,application/json" class="sr" multiple>
+      <span class="tiny muted" id="counter"></span>
+    </div>
+
+    <div id="bulk"></div>
+    <div class="lib-grid" id="grid"></div>
+
+    <div class="section-head" data-reveal>
+      <div>
+        <h2>Cómo se guarda tu trabajo</h2>
+        <p>Sin cuenta, sin nube y sin telemetría. Aquí está exactamente qué ocurre cuando editas, borras o arrastras una tarjeta.</p>
+      </div>
+    </div>
+    <div class="credits" data-reveal>
+      <div class="credit"><b>Autoguardado</b><p>Cada cambio en el editor se escribe en IndexedDB tras una breve pausa. Si el sistema cierra la pestaña para liberar memoria, el proyecto sigue intacto.</p></div>
+      <div class="credit"><b>Deshacer al borrar</b><p>Eliminar es reversible: el aviso mantiene los proyectos en memoria unos segundos y ofrece restaurarlos con un solo toque.</p></div>
+      <div class="credit"><b>Orden manual</b><p>Arrastra una tarjeta sobre otra para reordenar. El orden se guarda en el dispositivo y el selector cambia solo a «Orden manual».</p></div>
+      <div class="credit"><b>JSON portable</b><p>Exportar genera un <code>.punzon.json</code> con métricas, glifos y kerning. Importarlo en otro equipo reconstruye la fuente exactamente igual.</p></div>
+    </div>
+  </div>
+</main>
+
+<script type="module" src="js/pages/biblioteca.js"></script>
+</body>
+</html>
