@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B0F16">
+<meta name="color-scheme" content="dark">
+<meta name="description" content="Laboratorio de nombres para tu estudio tipográfico, recopilación de herramientas FOSS y decisiones técnicas de Punzón.">
+<title>Punzón · Guía</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<script>
+if(location.protocol==='file:'){document.write('<div class="file-guard"><h1 style="font-size:1.4rem;margin-bottom:10px">Sirve Punzón por HTTP</h1><p class="lead">Los módulos ES y el Service Worker necesitan un servidor local. Elige uno:</p><p style="margin-top:14px;font-weight:700;color:#F2A03D">Acode</p><pre>Pulsa el botón ▶ (Run) sobre index.html</pre><p style="margin-top:14px;font-weight:700;color:#F2A03D">Termux</p><pre>cd /sdcard/punzon\npython -m http.server 8080\n# abre http://localhost:8080</pre></div>');}
+</script>
+
+<noscript>
+  <div class="file-guard">
+    <h1 style="font-size:1.3rem;margin-bottom:10px">Punzón necesita JavaScript</h1>
+    <p class="lead">El laboratorio de nombres y la recopilación se construyen desde data/config.json en tu propio navegador.</p>
+  </div>
+</noscript>
+
+<header class="nav">
+  <a class="brand" href="index.html">
+    <svg viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="104" fill="#151B27"/><path d="M150 392V120h108c62 0 104 40 104 96s-42 96-104 96h-44v80z" fill="#F2A03D"/><circle cx="258" cy="216" r="42" fill="#151B27"/><path d="M118 404h276" stroke="#2BD9E8" stroke-width="14" stroke-linecap="round"/></svg>
+    <span id="brandName">Punzón</span>
+  </a>
+  <nav class="nav-links" id="navLinks" aria-label="Secciones"></nav>
+  <div class="nav-right">
+    <span class="pill" id="projPill">—</span>
+    <button class="btn sm ghost" id="soundBtn" aria-pressed="false"><span class="dot"></span>Silencio</button>
+    <button class="btn sm ghost" id="installBtn" hidden>Instalar</button>
+    <a class="btn sm primary" href="index.html">Editor</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="hero" data-reveal>
+      <p class="eyebrow">Laboratorio de nombres · investigación FOSS</p>
+      <h1>El nombre también es <em>diseño</em></h1>
+      <p class="lead">Dieciséis candidatos con su raíz y su razón, un mezclador para inventar más, y la recopilación completa de las herramientas libres que informaron esta arquitectura. Aplica el que quieras: la app se renombra en vivo y puedes descargar el manifiesto con tu marca.</p>
+    </section>
+
+    <section class="card pad" data-reveal>
+      <div class="row between">
+        <div>
+          <h2 style="font-size:1.1rem">Mezclador de nombres</h2>
+          <p class="tiny muted">Pulsa <kbd>R</kbd> para tirar. El historial queda guardado en este dispositivo.</p>
+        </div>
+        <div class="row">
+          <button class="btn sm" id="rollBtn">Tirar</button>
+          <button class="btn sm steel" id="useMixBtn">Usar este</button>
+        </div>
+      </div>
+      <div class="mixer" style="margin-top:14px"><span id="mixPre">Glifo</span><span class="out" id="mixOut">Glifaria</span></div>
+      <div class="mix-history" id="mixHistory"></div>
+      <p class="tiny muted" style="margin-top:10px">Comprueba disponibilidad de dominio y usuario antes de comprometerte: ningún nombre de esta lista ha sido verificado legalmente.</p>
+    </section>
+
+    <div class="section-head" data-reveal>
+      <div>
+        <h2>Candidatos</h2>
+        <p>Cada tarjeta explica de dónde sale la palabra y para qué carácter de proyecto sirve.</p>
+      </div>
+      <div class="row">
+        <span class="current-brand" id="currentBrand">Punzón</span>
+        <button class="btn sm ghost" id="resetBrand">Restaurar</button>
+        <button class="btn sm" id="namesExport">Exportar lista</button>
+      </div>
+    </div>
+
+    <div class="lib-toolbar" data-reveal>
+      <input type="search" id="nq" placeholder="Buscar nombre, raíz o razón…" aria-label="Buscar nombre">
+      <select id="ntag" aria-label="Filtrar por carácter"><option value="">Todos los caracteres</option></select>
+      <select id="nsort" aria-label="Ordenar nombres">
+        <option value="score">Mejor puntuación</option>
+        <option value="len">Más corto</option>
+        <option value="az">A–Z</option>
+      </select>
+      <span class="tiny muted" id="nCount"></span>
+    </div>
+
+    <div class="name-grid" id="nameGrid"></div>
+
+    <section class="card pad" style="margin-top:16px" data-reveal>
+      <h3 class="ctrl-title">Identidad propia</h3>
+      <div class="identity">
+        <div class="field"><span>Escribe tu propio nombre</span><input id="customName" maxlength="32" placeholder="Fundición Leonel" autocomplete="off"></div>
+        <button class="btn primary" id="applyCustom">Aplicar</button>
+        <button class="btn steel" id="manifestBtn">Descargar manifiesto</button>
+      </div>
+      <p class="tiny muted" style="margin-top:9px">El nombre se guarda en tu navegador y se aplica a la barra, al título de la pestaña y al manifiesto descargable. Sustituye <code>manifest.json</code> en tu repositorio para que la app instalada lleve tu marca.</p>
+    </section>
+
+    <div class="section-head" data-reveal>
+      <div>
+        <h2>Recopilación FOSS</h2>
+        <p>Lo que se investigó, con licencia y decisión de uso. Nada se descarga de CDN: el núcleo funciona sin dependencias.</p>
+      </div>
+      <div class="row">
+        <input type="search" id="stackQ" placeholder="Filtrar herramientas…" aria-label="Filtrar herramientas" style="max-width:230px">
+        <span class="tiny muted" id="stackCount"></span>
+      </div>
+    </div>
+    <div class="table-wrap" data-reveal>
+      <table class="table">
+        <thead><tr><th>Herramienta</th><th>Licencia</th><th>Decisión en Punzón</th><th>Fuente</th></tr></thead>
+        <tbody id="stackBody"></tbody>
+      </table>
+    </div>
+
+    <div class="section-head" data-reveal>
+      <div>
+        <h2>Decisiones técnicas</h2>
+        <p>Por qué el archivo TTF se escribe a mano y qué se hace con el winding, las curvas y la memoria.</p>
+      </div>
+    </div>
+    <div id="decisions" data-reveal></div>
+
+    <div class="section-head" data-reveal>
+      <div><h2>Atajos del editor</h2><p>Pensados para teclado y para pantalla táctil por igual.</p></div>
+    </div>
+    <div class="keys" id="keys" data-reveal></div>
+
+    <div class="section-head" data-reveal>
+      <div><h2>Estado real del proyecto</h2><p>Lo que ya funciona y lo que sigue pendiente, sin promesas infladas.</p></div>
+    </div>
+    <div class="road" id="road" data-reveal></div>
+
+    <div class="section-head" data-reveal><div><h2>Créditos y licencia</h2></div></div>
+    <div class="credits" data-reveal>
+      <div class="credit"><b>Código de Punzón</b><p>Escrito en JavaScript puro, sin frameworks ni build. Puedes copiarlo, modificarlo y publicarlo. Sugerencia: GPL-3.0 para el editor.</p></div>
+      <div class="credit"><b>Tus fuentes</b><p>Los TTF y WOFF que generes son tuyos. El proyecto sugiere SIL OFL 1.1 en los metadatos, pero puedes cambiarlo exportando el JSON.</p></div>
+      <div class="credit"><b>Sin servidores</b><p>Ninguna imagen, glifo o texto sale de tu dispositivo. El Service Worker sólo cachea archivos del propio origen.</p></div>
+      <div class="credit"><b>Verificación externa</b><p>Para auditar un TTF: <code>pip install fonttools</code> en Termux y luego <code>ttx fuente.ttf</code> para inspeccionar cada tabla.</p></div>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+import { $, el, initShell, toast, download, copy, debounce, slug, reveal } from './js/ui.js';
+import * as PR from './js/core/project.js';
+
+const S = { cfg: null, q: '', tag: '', sort: 'score', stackQ: '', mix: null, history: [] };
+const VOWELS = 'aeiouáéíóú';
+
+(async function boot() {
+  S.cfg = await initShell('guia');
+  S.history = (await PR.store.kvGet('mixes')) || [];
+  const projects = await PR.store.all();
+  $('#projPill').textContent = projects.length ? `${projects.length} fuentes locales` : 'sin proyectos aún';
+
+  const tags = [...new Set(S.cfg.nameCandidates.flatMap((c) => c.tags))].sort((a, b) => a.localeCompare(b, 'es'));
+  tags.forEach((t) => $('#ntag').append(el('option', { value: t }, t)));
+
+  bind();
+  renderNames();
+  renderStack();
+  renderDocs();
+  roll(true);
+  paintHistory();
+  paintBrand();
+  reveal();
+})();
+
+function bind() {
+  $('#nq').oninput = debounce((e) => { S.q = e.target.value.toLowerCase().trim(); renderNames(); }, 160);
+  $('#ntag').onchange = (e) => { S.tag = e.target.value; renderNames(); };
+  $('#nsort').onchange = (e) => { S.sort = e.target.value; renderNames(); };
+  $('#stackQ').oninput = debounce((e) => { S.stackQ = e.target.value.toLowerCase().trim(); renderStack(); }, 160);
+  $('#rollBtn').onclick = () => roll();
+  $('#useMixBtn').onclick = () => { if (S.mix) applyBrand(S.mix.name); };
+  $('#resetBrand').onclick = () => {
+    try { localStorage.removeItem('punzon.brand'); } catch {}
+    paintBrand(); renderNames(); toast(`Nombre restaurado a «${S.cfg.brand.name}».`, 'ok');
+  };
+  $('#namesExport').onclick = () => {
+    download(JSON.stringify({ format: 'punzon.names', version: 1, brand: currentBrand(), candidates: visibleNames(), mixes: S.history }, null, 2),
+      `punzon-nombres-${Date.now()}.json`, 'application/json');
+  };
+  $('#applyCustom').onclick = () => {
+    const v = $('#customName').value.trim();
+    if (!v) return toast('Escribe un nombre antes de aplicarlo.', 'warn');
+    applyBrand(v);
+  };
+  $('#customName').onkeydown = (e) => { if (e.key === 'Enter') $('#applyCustom').click(); };
+  $('#manifestBtn').onclick = () => {
+    const name = currentBrand();
+    const m = {
+      id: `punzon-${slug(name)}`, name: `${name} — estudio de fuentes y vectores`, short_name: name.slice(0, 12),
+      description: 'Dibuja, vectoriza y exporta fuentes TTF y WOFF reales desde el navegador. 100% offline, sin dependencias.',
+      lang: 'es', dir: 'ltr', start_url: 'index.html', scope: './', display: 'standalone',
+      display_override: ['window-controls-overlay', 'standalone', 'minimal-ui'], orientation: 'any',
+      background_color: '#07090E', theme_color: '#0B0F16', prefer_related_applications: false,
+      categories: ['productivity', 'graphics', 'developer'],
+      icons: [
+        { src: 'icon.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
+        { src: 'icon.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        { src: 'icon.svg', sizes: 'any', type: 'image/svg+xml', purpose: 'any' }
+      ],
+      shortcuts: [
+        { name: 'Editor de glifos', short_name: 'Editor', url: 'index.html' },
+        { name: 'Vectorizar imagen', short_name: 'Trazo', url: 'trazo.html' },
+        { name: 'Biblioteca de fuentes', short_name: 'Biblioteca', url: 'biblioteca.html' },
+        { name: 'Muestra tipográfica', short_name: 'Muestra', url: 'muestra.html' }
+      ]
+    };
+    download(JSON.stringify(m, null, 2), 'manifest.json', 'application/manifest+json');
+    toast('Manifiesto descargado. Sustituye el del repositorio para instalar con tu marca.', 'ok', 6000);
+  };
+  document.addEventListener('keydown', (e) => {
+    if (e.target.matches('input,textarea,select')) return;
+    if (e.key.toLowerCase() === 'r' && !e.ctrlKey && !e.metaKey) { e.preventDefault(); roll(); }
+  });
+}
+
+const currentBrand = () => { try { return localStorage.getItem('punzon.brand') || S.cfg.brand.name; } catch { return S.cfg.brand.name; } };
+
+function paintBrand() {
+  const b = currentBrand();
+  $('#brandName').textContent = b;
+  $('#currentBrand').textContent = b;
+  document.title = `${b} · Guía`;
+}
+function applyBrand(name) {
+  try { localStorage.setItem('punzon.brand', name); } catch {}
+  paintBrand(); renderNames();
+  toast(`Ahora la app se llama «${name}». Se aplicó a la barra y al título.`, 'ok', 5200);
+}
+
+function visibleNames() {
+  let list = S.cfg.nameCandidates.slice();
+  if (S.q) list = list.filter((c) => `${c.name} ${c.root} ${c.why} ${c.tags.join(' ')}`.toLowerCase().includes(S.q));
+  if (S.tag) list = list.filter((c) => c.tags.includes(S.tag));
+  const by = {
+    score: (a, b) => b.score - a.score,
+    len: (a, b) => a.name.length - b.name.length || b.score - a.score,
+    az: (a, b) => a.name.localeCompare(b.name, 'es')
+  };
+  return list.sort(by[S.sort]);
+}
+function renderNames() {
+  const host = $('#nameGrid'); host.innerHTML = '';
+  const list = visibleNames();
+  const brand = currentBrand();
+  $('#nCount').textContent = `${list.length} de ${S.cfg.nameCandidates.length} candidatos`;
+  if (!list.length) {
+    host.append(el('div', { class: 'empty', style: 'grid-column:1/-1' }, 'Ningún candidato coincide. Prueba el mezclador o escribe el tuyo abajo.'));
+    return;
+  }
+  for (const c of list) {
+    const active = c.name === brand;
+    host.append(el('article', { class: `card name-card ${active ? 'active' : ''}` },
+      el('span', { class: 'score' }, String(c.score)),
+      el('h3', {}, c.name),
+      el('div', { class: 'root' }, `raíz: ${c.root}`),
+      el('p', {}, c.why),
+      el('div', { class: 'row' }, ...c.tags.map((t) => el('span', { class: 'tag' }, t))),
+      el('div', { class: 'row', style: 'margin-top:11px' },
+        el('button', { class: `btn sm ${active ? 'steel' : 'primary'}`, onclick: () => applyBrand(c.name) }, active ? 'En uso' : 'Aplicar'),
+        el('button', { class: 'btn sm ghost', onclick: () => copy(c.name) }, 'Copiar'),
+        el('button', { class: 'btn sm ghost', onclick: () => { $('#customName').value = c.name; $('#customName').focus(); } }, 'Editar')
+      )
+    ));
+  }
+}
+
+function join(prefix, suffix) {
+  if (suffix[0] !== suffix[0].toLowerCase()) return `${prefix} ${suffix}`;
+  const last = prefix.slice(-1).toLowerCase();
+  if (VOWELS.includes(last) && VOWELS.includes(suffix[0].toLowerCase())) return prefix.slice(0, -1) + suffix;
+  return prefix + suffix;
+}
+function roll(silent) {
+  const { prefix, suffix } = S.cfg.nameParts;
+  const p = prefix[Math.floor(Math.random() * prefix.length)];
+  const s = suffix[Math.floor(Math.random() * suffix.length)];
+  const name = join(p, s);
+  S.mix = { prefix: p, suffix: s, name };
+  const out = $('#mixOut');
+  out.classList.add('roll');
+  setTimeout(() => {
+    $('#mixPre').textContent = `${p} + ${s} →`;
+    out.textContent = name;
+    out.classList.remove('roll');
+  }, 130);
+  if (!silent) {
+    S.history = [{ name, prefix: p, suffix: s }, ...S.history.filter((h) => h.name !== name)].slice(0, 12);
+    PR.store.kvSet('mixes', S.history);
+    paintHistory();
+  }
+}
+function paintHistory() {
+  const host = $('#mixHistory'); host.innerHTML = '';
+  if (!S.history.length) { host.append(el('span', { class: 'tiny muted' }, 'Aún no has tirado. Cada resultado queda aquí para recuperarlo.')); return; }
+  host.append(el('span', { class: 'tiny muted', style: 'align-self:center' }, 'Historial:'));
+  for (const h of S.history) host.append(el('button', { class: 'mix-chip', title: `${h.prefix} + ${h.suffix}`, onclick: () => applyBrand(h.name) }, h.name));
+}
+
+function renderStack() {
+  const body = $('#stackBody'); body.innerHTML = '';
+  const list = S.cfg.stack.filter((s) => !S.stackQ || `${s.name} ${s.license} ${s.role} ${s.use}`.toLowerCase().includes(S.stackQ));
+  $('#stackCount').textContent = `${list.length} de ${S.cfg.stack.length}`;
+  if (!list.length) { body.append(el('tr', {}, el('td', { colspan: 4, class: 'muted' }, 'Ninguna herramienta coincide con el filtro.'))); return; }
+  for (const s of list) {
+    body.append(el('tr', {},
+      el('td', {}, el('b', {}, s.name), el('div', { class: 'tiny muted' }, s.role)),
+      el('td', {}, el('span', { class: 'tag brass' }, s.license)),
+      el('td', { class: 'tiny' }, s.use),
+      el('td', {}, el('a', { href: s.url, target: '_blank', rel: 'noopener noreferrer' }, 'repo ↗'))
+    ));
+  }
+}
+
+function renderDocs() {
+  const dec = $('#decisions'); dec.innerHTML = '';
+  S.cfg.decisions.forEach((d, i) => dec.append(el('details', { class: 'acc', open: i === 0 },
+    el('summary', {}, d.t), el('div', { class: 'acc-body' }, d.d))));
+
+  const keys = $('#keys'); keys.innerHTML = '';
+  S.cfg.shortcuts.forEach(([k, v]) => keys.append(el('div', { class: 'key-row' }, el('kbd', {}, k), el('span', { class: 'muted tiny' }, v))));
+
+  const road = $('#road'); road.innerHTML = '';
+  const done = S.cfg.roadmap.filter((r) => r.state === 'hecho').length;
+  road.append(el('p', { class: 'tiny muted' }, `${done} de ${S.cfg.roadmap.length} bloques terminados.`));
+  S.cfg.roadmap.forEach((r) => road.append(el('div', { class: `road-item ${r.state}` },
+    el('span', { class: 'dot' }), el('span', {}, r.t),
+    el('span', { class: `tag ${r.state === 'hecho' ? 'acid' : 'warn'}` }, r.state === 'hecho' ? 'listo' : 'pendiente'))));
+}
+</script>
+</body>
+</html>
